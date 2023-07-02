@@ -53,6 +53,8 @@ public:
 
     }
 
+
+
     virtual int  netSalaryOfTheCurrentMonth() = 0;
     virtual int grossSalaryOfTheCurrentMonth() = 0;
     virtual int grossSalaryOfTheCurrentMonth(int workOfTheCurrentMonth) = 0;
@@ -249,10 +251,132 @@ public:
 
 };
 
+class Company {
+private:
+    string name;
+    int numEmployee;
+    vector<Employee*> employees;
+
+public:
+
+
+    Company(const string& name, int numEmployee)
+        : name(name), numEmployee(numEmployee)
+    {
+    }
+
+    void addEmployee(Employee *employee) {
+        employees.push_back(employee);
+    }
+
+    vector<Employee*> getEmployees() {
+        return employees;
+    }
+
+
+
+
+};
+
+Date* createDate(string title) {
+    int day;
+    int month;
+    int year;
+    cout << title << endl;
+    cout << "Day:";
+    cin >> day;
+    cout << "Month:";
+    cin >> month;
+    cout << "Year:";
+    cin >> year;
+
+    return new Date(day, month, year);
+
+}
+Employee * createEmployee() {
+
+    string firstName;
+    string lastName;
+    int personalNumber;
+    int accountingNumber;
+    cout << "Create Employee." << endl;
+    cout << "First name:";
+    cin >> firstName;
+    cout << "Last name:";
+    cin >> lastName;
+    cout << "Personal Number:";
+    cin >> personalNumber;
+    cout << "Accounting Number:";
+    cin >> accountingNumber;
+
+
+
+    int choice;
+
+        cout << "Choice type of employee?  1.Total Time employee   2.Agreement employee  etc.Semi time employee" << endl << "Choice:";
+        cin >> choice;
+        if (choice == 1) {
+            int monthlySalary;
+            int overtime;
+            int score;
+            int resetTime;
+            cout << "Monthly Salary:";
+            cin >> monthlySalary;
+            cout << "Overtime:";
+            cin >> overtime;
+
+            cout << "Reset Time:";
+            cin >> resetTime;
+
+            return new EmployeeTotalTime(firstName, lastName, personalNumber, accountingNumber, monthlySalary, resetTime, overtime, *createDate("Birth day:"), *createDate("Start work:"), *createDate("Start Contract:"), *createDate("Finish Contract:"));
+
+
+        }
+        else if (choice == 2) {
+            int monthlySalary;
+            int overtime;
+            int score;
+            int resetTime;
+            cout << "Monthly Salary:";
+            cin >> monthlySalary;
+            cout << "Overtime:";
+            cin >> overtime;
+            cout << "Score:";
+            cin >> score;
+            cout << "Reset Time:";
+            cin >> resetTime;
+
+            return new EmployeeAgreement(firstName, lastName, personalNumber, accountingNumber, monthlySalary, resetTime, overtime,score, *createDate("Birth day:"), *createDate("Start work:"), *createDate("Start Contract:"), *createDate("Finish Contract:"));
+
+
+        }
+        else {
+
+            int salaryPerHour;
+            int workOfTheCurrentMonth;
+            cout << "Salary Per Hour:";
+            cin >> salaryPerHour;
+            cout << "Work Of The Current Month:";
+            cin >> workOfTheCurrentMonth;
+            return new EmployeeSemiTime(firstName, lastName, personalNumber, accountingNumber, salaryPerHour, workOfTheCurrentMonth, *createDate("Birth day:"), *createDate("Start work:"), *createDate("Start Contract:"), *createDate("Finish Contract:"));
+
+        }
+
+
+
+}
 int main()
 {
     Date d = Date(34, 5, 6);
     vector<Employee*> employees;
+
+    Company* company = new Company("Iran", 6);
+
+    company->addEmployee(createEmployee());
+
+
+
+    
 
     employees.push_back(
         new EmployeeSemiTime("mohammad", "Reza", 33, 65, 22, 44, d, d, d, d));
@@ -265,10 +389,12 @@ int main()
 
 
 
-
     std::cout << employees[0]->netSalaryOfTheCurrentMonth()<< endl;
     std::cout << employees[1]->netSalaryOfTheCurrentMonth() << endl;
     std::cout << employees[2]->grossSalaryOfTheCurrentMonth() << endl;
+    std::cout << company->getEmployees()[0]->netSalaryOfTheCurrentMonth()<< endl;
+
+
 
     
 
