@@ -215,7 +215,7 @@ public:
     EmployeeAgreement(const string& firstName, const string& lastName,
         int personalNumber, int accountingNumber, int monthlySalary, int resetTime, int overtime, int score, const Date& birthDate,
         const Date& startWork, const Date& startContract, const Date& finishContract)
-        :Employee(firstName, lastName, personalNumber, accountingNumber, convertMonthlySalarytoHoursPerSalary(monthlySalary), 176, birthDate, startWork, startContract, finishContract), score(score), resetTime(resetTime) {
+        :Employee(firstName, lastName, personalNumber, accountingNumber, convertMonthlySalarytoHoursPerSalary(monthlySalary), 176, birthDate, startWork, startContract, finishContract), score(score), resetTime(resetTime) ,overtime(overtime){
     }
 
 
@@ -261,14 +261,14 @@ int main()
         new EmployeeTotalTime("mohammad", "Reza", 33, 22, 45000, 77, 44, d, d, d, d));
 
     employees.push_back(
-        new EmployeeAgreement("mohammad", "Reza", 33, 22, 45000, 77,34, 44, d, d, d, d));
+        new EmployeeAgreement("mohammad", "Reza", 33, 22, 45000, 77, 5, 44, d, d, d, d));
 
 
 
 
     std::cout << employees[0]->netSalaryOfTheCurrentMonth()<< endl;
     std::cout << employees[1]->netSalaryOfTheCurrentMonth() << endl;
-    std::cout << employees[2]->netSalaryOfTheCurrentMonth() << endl;
+    std::cout << employees[2]->grossSalaryOfTheCurrentMonth() << endl;
 
     
 
