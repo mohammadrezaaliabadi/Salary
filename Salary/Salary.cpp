@@ -258,13 +258,19 @@ int main()
         new EmployeeSemiTime("mohammad", "Reza", 33, 65, 22, 44, d, d, d, d));
 
     employees.push_back(
-        new EmployeeTotalTime("mohammad", "Reza", 33, 22, 22, 77, 44, d, d, d, d));
+        new EmployeeTotalTime("mohammad", "Reza", 33, 22, 45000, 77, 44, d, d, d, d));
+
+    employees.push_back(
+        new EmployeeAgreement("mohammad", "Reza", 33, 22, 45000, 77,34, 44, d, d, d, d));
 
 
 
 
     std::cout << employees[0]->netSalaryOfTheCurrentMonth()<< endl;
-    std::cout << employees[1]->netSalaryOfTheCurrentMonth()<<endl;
+    std::cout << employees[1]->netSalaryOfTheCurrentMonth() << endl;
+    std::cout << employees[2]->netSalaryOfTheCurrentMonth() << endl;
+
+    
 
 }
 
