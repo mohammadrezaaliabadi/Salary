@@ -53,11 +53,40 @@ public:
 
     }
 
-
-
-    virtual int  netSalaryOfTheCurrentMonth() = 0;
+    virtual int netSalaryOfTheCurrentMonth() = 0;
     virtual int grossSalaryOfTheCurrentMonth() = 0;
     virtual int grossSalaryOfTheCurrentMonth(int workOfTheCurrentMonth) = 0;
+    virtual int getLessWorkMony() = 0;
+
+    int getTaxMony() {
+        return (tax * grossSalaryOfTheCurrentMonth()/100);
+    }
+
+    int getInsuranceMony() {
+        return (insuranse * grossSalaryOfTheCurrentMonth()/100);
+    }
+
+  
+
+
+    friend ostream& operator<<(std::ostream& strm,Employee& e) {
+        return strm << "Employee:" <<endl
+            <<"First Name:"<<e.firstName << endl
+            <<"Last Name:"<<e.lastName << endl
+            <<"Personal Number:"<<e.personalNumber << endl
+            <<"Account Number:"<<e.accountingNumber << endl
+            <<"Salary Per Hours:"<<e.salaryPerHour << endl
+            <<"Work of the current month:"<<e.workOfTheCurrentMonth << endl
+            <<"Gross Salary Of The Current Month:"<<e.grossSalaryOfTheCurrentMonth() << endl
+            <<"Tax:"<<e.getTaxMony() << endl
+            <<"Insurance:"<<e.getInsuranceMony() << endl
+            <<"Less Work:"<<e.getLessWorkMony() << endl
+            <<"Net Salary Of The Current Month:"<<e.netSalaryOfTheCurrentMonth() << endl
+            ;
+    }
+
+
+
 
 
     // Getter methods
@@ -154,6 +183,10 @@ public:
         return grossSalaryOfTheCurrentMonth();
     };
 
+    int getLessWorkMony() {
+        return 0;
+    }
+
     
 
     string toString() {
@@ -179,18 +212,26 @@ public:
        monthlySalary(monthlySalary), resetTime(resetTime),overtime(overtime) {
     }
 
+
+
     int convertMonthlySalarytoHoursPerSalary(int monthlySalary) {
         return monthlySalary / 176;
     }
 
-    int netSalaryOfTheCurrentMonth() {
+
+    int getLessWorkMony() {
         int monyResetTime = 0;
         if (resetTime > 20) {
             monyResetTime = (resetTime - 20) * salaryPerHour * 1.2;
         }
-        return grossSalaryOfTheCurrentMonth() - monyResetTime - (tax * grossSalaryOfTheCurrentMonth() / 100) - (insuranse * grossSalaryOfTheCurrentMonth() / 100);
+        return monyResetTime;
+    }
+
+    int netSalaryOfTheCurrentMonth() {
+        return grossSalaryOfTheCurrentMonth() - getLessWorkMony() - (tax * grossSalaryOfTheCurrentMonth() / 100) - (insuranse * grossSalaryOfTheCurrentMonth() / 100);
 
     };
+
 
     int grossSalaryOfTheCurrentMonth() {
         int monyOvertime = overtime * 1.2 * salaryPerHour;
@@ -225,12 +266,17 @@ public:
         return monthlySalary / 176;
     }
 
-    int netSalaryOfTheCurrentMonth() {
+    int getLessWorkMony() {
         int monyResetTime = 0;
         if (resetTime > 25) {
             monyResetTime = (resetTime - 25) * salaryPerHour * 1.2;
         }
-        return grossSalaryOfTheCurrentMonth() - monyResetTime - (tax * grossSalaryOfTheCurrentMonth() / 100) - (insuranse * grossSalaryOfTheCurrentMonth() / 100);
+        return monyResetTime;
+    }
+
+    int netSalaryOfTheCurrentMonth() {
+
+        return grossSalaryOfTheCurrentMonth() - getLessWorkMony() - (tax * grossSalaryOfTheCurrentMonth() / 100) - (insuranse * grossSalaryOfTheCurrentMonth() / 100);
 
     };
 
@@ -372,7 +418,7 @@ int main()
 
     Company* company = new Company("Iran", 6);
 
-    company->addEmployee(createEmployee());
+    //company->addEmployee(createEmployee());
 
 
 
@@ -392,7 +438,10 @@ int main()
     std::cout << employees[0]->netSalaryOfTheCurrentMonth()<< endl;
     std::cout << employees[1]->netSalaryOfTheCurrentMonth() << endl;
     std::cout << employees[2]->grossSalaryOfTheCurrentMonth() << endl;
-    std::cout << company->getEmployees()[0]->netSalaryOfTheCurrentMonth()<< endl;
+    //std::cout << *company->getEmployees()[0]<< endl;
+    EmployeeAgreement e("mohammad", "Reza", 33, 22, 45000, 77, 5, 44, d, d, d, d);
+    std::cout <<"Test:"<< e<< endl;
+
 
 
 
