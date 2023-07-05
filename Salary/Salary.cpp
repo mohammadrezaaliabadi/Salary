@@ -3,9 +3,7 @@
 
 #include <iostream>
 #include <string>
-#include <ctime>
 #include <vector>
-#include <list>
 using namespace std;
 
 class Date {
@@ -319,6 +317,46 @@ public:
         return employees;
     }
 
+    Employee* getEmployeeByPersonalNumber(int personalNumber){
+        for (int i = 0; i < employees.size(); i++) {
+            if (employees[i]->getPersonalNumber() == personalNumber) {
+                return employees[i];
+            }
+
+        }
+        return NULL;
+    }
+
+    int totalTaxMonyPeyment() {
+        int t = 0;
+        for (auto &e : employees) {
+            t = e->getTaxMony() + t;
+        }
+
+        return t;
+
+    }
+
+    int totalInsuranecMonyPeyment() {
+        int t = 0;
+        for (auto& e : employees) {
+            t = e->getInsuranceMony() + t;
+        }
+
+        return t;
+
+    }
+
+    int totalEmployeeSalaryPeyment() {
+        int t = 0;
+        for (auto& e : employees) {
+            t = e->netSalaryOfTheCurrentMonth() + t;
+        }
+
+        return t;
+
+    }
+
 
 
 
@@ -416,7 +454,78 @@ int main()
     Date d = Date(34, 5, 6);
     vector<Employee*> employees;
 
-    Company* company = new Company("Iran", 6);
+    string companyName;
+
+    int employeeCount;
+    cout << "Company name:";
+
+    cin >> companyName;
+
+    cout << "Employee count:";
+
+    cin >> employeeCount;
+
+
+
+
+   
+
+    Company* company = new Company(companyName, employeeCount);
+    EmployeeAgreement *e = new EmployeeAgreement("mohammad", "Reza", 33, 22, 45000, 77, 5, 44, d, d, d, d);
+    EmployeeAgreement *e2 = new EmployeeAgreement("mohammad", "Reza", 33, 22, 45000, 77, 5, 44, d, d, d, d);
+    company->addEmployee(e);
+    company->addEmployee(e2);
+
+     while (true) {
+        int select;
+        cout << "1.Add employee.   2.Get Employee by personal number    3.Total Peyment company     Select?:";
+        cin >> select;
+        switch (select)
+        {
+        case 1: {
+            company->addEmployee(createEmployee());
+
+            break;
+        }
+        case 2: {
+            int personalNumber;
+
+            cout << "Personal number:";
+            cin >> personalNumber;
+            Employee* e = company ->getEmployeeByPersonalNumber(personalNumber);
+
+            int choice;
+            cout << "1. Gross salary by Work Of The Current Month. 2.Nat salary  etc:Pay slip Choice?";
+            cin >> choice;
+            if (choice == 1) {
+                int workOfTheCurrentMonth;
+                cout << "Work Of The Current Month:";
+                cin >> workOfTheCurrentMonth;
+                cout<<"Mony gross salary:" << e->grossSalaryOfTheCurrentMonth(workOfTheCurrentMonth)<<endl;
+            }
+            else if (choice == 2) {
+                cout << "Mony nat salary:" << e->netSalaryOfTheCurrentMonth() << endl;
+
+            }
+            else {
+                cout << *e;
+            }
+            break;
+        }
+        case 3: {
+
+            cout << "Total Tax peyment:" << company->totalTaxMonyPeyment() << endl;
+            cout << "Total Insurance peyment:" << company->totalInsuranecMonyPeyment() << endl;
+            cout << "Total Employee peyment:" << company->totalEmployeeSalaryPeyment() << endl;
+
+            break;
+        }
+        case 4:
+
+        default:
+            break;
+        };
+    }
 
     //company->addEmployee(createEmployee());
 
@@ -439,8 +548,6 @@ int main()
     std::cout << employees[1]->netSalaryOfTheCurrentMonth() << endl;
     std::cout << employees[2]->grossSalaryOfTheCurrentMonth() << endl;
     //std::cout << *company->getEmployees()[0]<< endl;
-    EmployeeAgreement e("mohammad", "Reza", 33, 22, 45000, 77, 5, 44, d, d, d, d);
-    std::cout <<"Test:"<< e<< endl;
 
 
 
