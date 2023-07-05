@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <fstream>
 using namespace std;
 
 class Date {
@@ -357,6 +358,37 @@ public:
 
     }
 
+    void writeToCsv() {
+        ofstream file(name+".csv");
+        file << "FirstName"<< ",";
+        file << "LastName" << ",";
+        file << "PersonalNumber" << ",";
+        file << "AccountingNumber" << ",";
+        file << "SalaryPerHour" << ",";
+        file << "WorkOfTheCurrentMonth" << ",";
+        file << "grossSalaryOfTheCurrentMonth" << ",";
+        file << "TaxMony" << ",";
+        file << "InsuranceMony" << ",";
+        file << "LessWorkMony" << ",";
+        file << "NetSalaryOfTheCurrentMonth" << "," << endl;
+
+        for (auto& e : employees) {
+            file << e->getFirstName() << ",";
+            file << e->getLastName() << ",";
+            file << e->getPersonalNumber() << ",";
+            file << e->getAccountingNumber() << ",";
+            file << e->getSalaryPerHour() << ",";
+            file << e->getWorkOfTheCurrentMonth() << ",";
+            file << e->grossSalaryOfTheCurrentMonth() << ",";
+            file << e->getTaxMony() << ",";
+            file << e->getInsuranceMony() << ",";
+            file << e->getLessWorkMony() << ",";
+            file << e->netSalaryOfTheCurrentMonth() << ","<<endl;
+        }
+
+        file.close();
+    }
+
 
 
 
@@ -478,7 +510,7 @@ int main()
 
      while (true) {
         int select;
-        cout << "1.Add employee.   2.Get Employee by personal number    3.Total Peyment company     Select?:";
+        cout << "1.Add employee.   2.Get Employee by personal number    3.Total Peyment company     4.Save to Csv   etc:Exit   Select?:";
         cin >> select;
         switch (select)
         {
@@ -520,9 +552,13 @@ int main()
 
             break;
         }
-        case 4:
+        case 4: {
+            company->writeToCsv();
+            break;
+        }
 
         default:
+            return 0;
             break;
         };
     }
@@ -532,22 +568,6 @@ int main()
 
 
     
-
-    employees.push_back(
-        new EmployeeSemiTime("mohammad", "Reza", 33, 65, 22, 44, d, d, d, d));
-
-    employees.push_back(
-        new EmployeeTotalTime("mohammad", "Reza", 33, 22, 45000, 77, 44, d, d, d, d));
-
-    employees.push_back(
-        new EmployeeAgreement("mohammad", "Reza", 33, 22, 45000, 77, 5, 44, d, d, d, d));
-
-
-
-    std::cout << employees[0]->netSalaryOfTheCurrentMonth()<< endl;
-    std::cout << employees[1]->netSalaryOfTheCurrentMonth() << endl;
-    std::cout << employees[2]->grossSalaryOfTheCurrentMonth() << endl;
-    //std::cout << *company->getEmployees()[0]<< endl;
 
 
 
