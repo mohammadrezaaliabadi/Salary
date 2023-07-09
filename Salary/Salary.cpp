@@ -298,6 +298,7 @@ public:
 
 class Company {
 private:
+    const int totalInsurance = 30;
     string name;
     int numEmployee;
     vector<Employee*> employees;
@@ -341,7 +342,7 @@ public:
     int totalInsuranecMonyPeyment() {
         int t = 0;
         for (auto& e : employees) {
-            t = e->getInsuranceMony() + t;
+            t = (e->grossSalaryOfTheCurrentMonth()* totalInsurance /100) + t;
         }
 
         return t;
@@ -563,7 +564,6 @@ int main()
         };
     }
 
-    //company->addEmployee(createEmployee());
 
 
 
